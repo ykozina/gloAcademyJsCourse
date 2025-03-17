@@ -1,9 +1,9 @@
-let title = "GloAcademy JS course: lesson 02";
-let screens = "Простые, Сложные, Интерактивные";
-let screenPrice = 1500;
-let rollback = 14;
-let fullPrice = 7000;
-let adaptive = true;
+const title = "GloAcademy JS course: lesson 02";
+const screens = "Простые, Сложные, Интерактивные";
+const screenPrice = 1500;
+const rollback = 14;
+const fullPrice = 7000;
+const adaptive = true;
 
 alert('На данной странице выводится задание второго урока курса');
 
