@@ -1,20 +1,47 @@
 'use strict';
-//alert('На данной странице выводится задание четвертого урока курса');
+//alert('На данной странице выводится задание пятого урока курса');
 
-const title = prompt('Как называется ваш проект?');
-const screens = prompt('Какие типы экранов нужно разработать?');
-const screenPrice = +prompt('Сколько будет стоить данная работа?');
-const adaptive = confirm('Нужен ли адаптив на сайте?');
-const addService1 = prompt('Какой дополнительный тип услуги нужен?');
-const addService1Price = +prompt('Сколько это будет стоить?');
-const addService2 = prompt('Какой дополнительный тип услуги нужен?');
-const addService2Price = +prompt('Сколько это будет стоить?');
-
-const rollback = 14;
-
+let title;
+let screens;
+let screenPrice;
+let adaptive;
+let rollback = 14;
+let addService1;
+let addService2;
 let fullPrice;
 let allServicePrices;
 let servicePercentPrice;
+
+const isNumber = function (num) {
+    return !isNaN(parseFloat(num)) && isFinite(num)
+}
+
+const asking = function () {
+    title = prompt('Как называется ваш проект?', 'Калькулятор верстки');
+    screens = prompt('Какие типы экранов нужно разработать?', 'Простые, сложные, средние');
+
+    while (!isNumber(screenPrice)) {
+        screenPrice = prompt('Сколько будет стоить данная работа?');
+    }
+
+    screenPrice = +screenPrice;
+    adaptive = confirm('Нужен ли адаптив на сайте?');
+}
+
+
+const getAllServicePrices = function () {
+    let sum = 0;
+    for (let i = 0; i < 2; i++) {
+        if (i === 0) {
+            addService1 = prompt('Какой дополнительный тип услуги нужен?');
+        } else if (i === 1) {
+            addService2 = prompt('Какой дополнительный тип услуги нужен?');
+        }
+
+        sum += +prompt('Сколько будет стоить данная работа?');
+    }
+    return sum;
+}
 
 function getTitle(projectName) {
     return projectName.trim().charAt(0).toUpperCase() + projectName.trim().slice(1).toLowerCase();
@@ -37,10 +64,6 @@ const getRollbackMessage = function (price) {
     };
 }
 
-const getAllServicePrices = function (price1, price2) {
-    return price1 + price2;
-}
-
 function getFullPrice(devPrice, servicePrice) {
     return devPrice + servicePrice;
 }
@@ -49,12 +72,16 @@ function getServicePercentPrices(price, percent) {
     return Math.ceil(price - (price * (percent / 100)));
 }
 
-allServicePrices = getAllServicePrices(addService1Price, addService2Price);
+asking();
+
+allServicePrices = getAllServicePrices();
 fullPrice = getFullPrice(screenPrice, allServicePrices);
 
 showTypeOf(getTitle(title));
 showTypeOf(screenPrice);
 showTypeOf(adaptive);
+
+console.log(allServicePrices);
 
 console.log("Сумма всего: " + fullPrice);
 console.log("Сумма всех дополнительных услуг: " + allServicePrices);
