@@ -6,11 +6,11 @@ let screens;
 let screenPrice;
 let adaptive;
 let rollback = 14;
+let allServicePrices;
+let fullPrice;
+let servicePercentPrice;
 let addService1;
 let addService2;
-let fullPrice;
-let allServicePrices;
-let servicePercentPrice;
 
 const isNumber = function (num) {
     return !isNaN(parseFloat(num)) && isFinite(num)
@@ -20,35 +20,46 @@ const asking = function () {
     title = prompt('Как называется ваш проект?', 'Калькулятор верстки');
     screens = prompt('Какие типы экранов нужно разработать?', 'Простые, сложные, средние');
 
-    while (!isNumber(screenPrice)) {
+    do {
         screenPrice = prompt('Сколько будет стоить данная работа?');
-    }
+    } while (!isNumber(screenPrice))
 
-    screenPrice = +screenPrice;
     adaptive = confirm('Нужен ли адаптив на сайте?');
 }
 
 
 const getAllServicePrices = function () {
     let sum = 0;
+
     for (let i = 0; i < 2; i++) {
+        let price = 0;
+
         if (i === 0) {
             addService1 = prompt('Какой дополнительный тип услуги нужен?');
         } else if (i === 1) {
             addService2 = prompt('Какой дополнительный тип услуги нужен?');
         }
 
-        sum += +prompt('Сколько будет стоить данная работа?');
+        do {
+            price = prompt('Сколько это будет стоить?')
+        } while (!isNumber(price));
+
+        sum += +price;
     }
+
     return sum;
+}
+
+function getFullPrice(devPrice, servicePrice) {
+    return devPrice + servicePrice;
+}
+
+function getServicePercentPrices(price, percent) {
+    return Math.ceil(price - (price * (percent / 100)));
 }
 
 function getTitle(projectName) {
     return projectName.trim().charAt(0).toUpperCase() + projectName.trim().slice(1).toLowerCase();
-}
-
-const showTypeOf = function (variable) {
-    console.log("Переменная " + variable + " имеет тип ", typeof variable)
 }
 
 const getRollbackMessage = function (price) {
@@ -64,27 +75,23 @@ const getRollbackMessage = function (price) {
     };
 }
 
-function getFullPrice(devPrice, servicePrice) {
-    return devPrice + servicePrice;
-}
 
-function getServicePercentPrices(price, percent) {
-    return Math.ceil(price - (price * (percent / 100)));
-}
 
 asking();
 
 allServicePrices = getAllServicePrices();
-fullPrice = getFullPrice(screenPrice, allServicePrices);
+fullPrice = getFullPrice(+screenPrice, +allServicePrices);
+servicePercentPrice = getServicePercentPrices(fullPrice, rollback);
+title = getTitle(title);
 
-showTypeOf(getTitle(title));
-showTypeOf(screenPrice);
-showTypeOf(adaptive);
 
-console.log(allServicePrices);
+console.log('Название проекта', title);
+console.log("Сумма всего:", fullPrice);
+console.log("Сумма всех дополнительных услуг:", allServicePrices);
 
-console.log("Сумма всего: " + fullPrice);
-console.log("Сумма всех дополнительных услуг: " + allServicePrices);
+
 console.log(getRollbackMessage(fullPrice));
 console.log("Итоговая стоимость за вычетом отката посреднику: " + getServicePercentPrices(fullPrice, rollback));
+console.log(screens.length);
+console.log(servicePercentPrice);
 console.log(screens.toLowerCase().split(', '));
