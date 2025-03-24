@@ -26,7 +26,6 @@ const appData = {
     },
 
     asking: function () {
-        //appData.title = prompt('Как называется ваш проект?', 'Калькулятор верстки');
 
         //добавляем проверку на строку
         do {
@@ -34,7 +33,6 @@ const appData = {
         } while (appData.isNumber(appData.title))
 
         for (let i = 0; i < 2; i++) {
-            //let name = prompt('Какие типы экранов нужно разработать?');
             let name = '';
             let price = 0;
 
@@ -54,7 +52,7 @@ const appData = {
         }
 
         for (let i = 0; i < 2; i++) {
-            //let name = prompt('Какой дополнительный тип услуги нужен?');
+
             let name = '';
             let price = 0;
 
@@ -66,6 +64,8 @@ const appData = {
                 price = prompt('Сколько это будет стоить?')
             } while (!appData.isNumber(price));
 
+            //добавляем уникальность названиям ключей с использованием индекса
+            name = 'Дополнительная услуга ' + (i + 1) + ': ' + name;
             appData.addServices[name] = +price;
         }
 
@@ -73,19 +73,15 @@ const appData = {
     },
 
     addPrices: function () {
-        for (let screen of appData.screens) {
-            appData.screenPrice += +screen.price
-        }
+
+        appData.screenPrice = appData.screens.reduce(function (sum, screen) {
+            return sum + Number(screen.price);
+        }, 0)
 
         for (let key in appData.addServices) {
             appData.allServicePrices += appData.addServices[key];
         }
 
-        // const screenSum = appData.screens.reduce(function (sum, screen) {
-        //     return sum + screen.price;
-        // }, 0)
-
-        //appData.screenPrice = +screenSum;
     },
 
 
