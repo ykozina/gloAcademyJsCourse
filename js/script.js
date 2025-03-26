@@ -9,7 +9,12 @@ const percents = document.querySelectorAll('.other-items.percent');
 const numbers = document.querySelectorAll('.other-items.number');
 const rollbackRange = document.querySelector('.rollback input[type=range]');
 const rollbackValue = document.querySelector('.rollback span.range-value');
-const totalInputs = Array.from(document.getElementsByClassName('total-input'));
+const totalInputs = document.getElementsByClassName('total-input');
+const fullPriceInput = totalInputs[0];
+const amountOfScreensInput = totalInputs[1];
+const servicesPriceInput = totalInputs[2];
+const finalPriceInput = totalInputs[3];
+const rollbackPriceInput = totalInputs[4];
 
 let screenTypes = document.querySelectorAll('.screen');
 
@@ -28,10 +33,11 @@ numbers.forEach(function (item) {
 
 console.log(rollbackRange);
 console.log(rollbackValue);
-
-totalInputs.forEach(function (item) {
-    console.log(item)
-})
+console.log(fullPriceInput);
+console.log(amountOfScreensInput);
+console.log(servicesPriceInput);
+console.log(finalPriceInput);
+console.log(rollbackPriceInput);
 
 screenTypes.forEach(function (item) {
     console.log(item)
