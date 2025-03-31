@@ -515,6 +515,11 @@ button {
     transition: all .3s
 }
 
+button.inactive {
+    background-color: #2F4F4F;
+    pointer-events: none;
+}
+
 button:hover {
     background-color: #b92f2f
 }
